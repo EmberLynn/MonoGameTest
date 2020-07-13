@@ -10,7 +10,14 @@ namespace MonoGameTest
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
+
+        //need this for our sprites
         SpriteBatch spriteBatch;
+
+        //Texture2D objects to hold our images in
+        private Texture2D background;
+        private Texture2D boat;
+        private Texture2D seagull;
 
         public Game1()
         {
@@ -38,9 +45,17 @@ namespace MonoGameTest
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            //this contains methods for drawing sprites onto the screen
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            //load our images from contents
+            //refer specifically to the name of the file in contents
+            background = Content.Load<Texture2D>("simple-island");
+            boat = Content.Load<Texture2D>("small-boat");
+            seagull = Content.Load<Texture2D>("seagull");
+
         }
 
         /// <summary>
@@ -73,9 +88,20 @@ namespace MonoGameTest
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
+         
             // TODO: Add your drawing code here
+
+            //let's start using out spritebatch
+            spriteBatch.Begin();
+
+            //let's draw from out spritebatch
+
+            //draw our background as a rectangle at specified position, width, and height
+            //last argument is tint color where white won't tint at all
+            spriteBatch.Draw(background, new Rectangle(0, 0, 800, 500), Color.White);
+
+            //finished using our spritebatch
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
