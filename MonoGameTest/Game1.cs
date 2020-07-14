@@ -23,7 +23,8 @@ namespace MonoGameTest
         private SpriteFont pixelfont;
 
         //let's count how long our seagull has been on the island
-
+        private float timer = 0;
+        private int secondsOnIsland = 0;
 
         public Game1()
         {
@@ -88,6 +89,11 @@ namespace MonoGameTest
 
             // TODO: Add your update logic here
 
+            //timer that shows us how long the seagull has been on the island for
+            timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //I only want to show the seconds
+            secondsOnIsland = (int)timer % 60;
+
             base.Update(gameTime);
         }
 
@@ -115,7 +121,8 @@ namespace MonoGameTest
             spriteBatch.Draw(boat, new Vector2(0, 50), Color.White);
 
             //let's draw some text on our screen with pixelfont
-            spriteBatch.DrawString(pixelfont, "This is a seagull alone on an island.", new Vector2(400, 200), Color.Black);
+            spriteBatch.DrawString(pixelfont, "This is a seagull alone on an island. ", new Vector2(390, 180), Color.Black);
+            spriteBatch.DrawString(pixelfont, "Seconds he has been alone for: " + secondsOnIsland, new Vector2(390, 200), Color.Black);
 
             //finished using our spritebatch
             spriteBatch.End();
