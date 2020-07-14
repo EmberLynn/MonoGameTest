@@ -1,0 +1,22 @@
+MonoGame Notes
+
+Adding Assets:
+-right click Content.mgcb -> open with MonoGame Pipeline tool
+-click edit-> add -> existing item -> find file
+	or click add existing item icon
+	
+Drawing Code
+-any code to draw with spritebatch should be in the draw method
+
+Adding Sprite Font
+-right click content.mgcb -> open with MonoGame Pipeline tool
+-right click content and add new item	
+	-pick spritefont and name it what you will
+	-edit the file and put in what font you want/have
+-you can find all fonts on local machine under C:/Windows/Fonts
+NOTE:
+-the above only works for pre-existing fonts and not downloaded fonts
+-here is what I had to do for the downloaded font:
+	-in Content.mgbc in the MonoGame Pipeline Tool add the downloaded font to content
+	-make sure <FontName> matches the name of the file in Content.mgcb
+	-I did not add the file extension when placing inside <FontName>

@@ -19,6 +19,12 @@ namespace MonoGameTest
         private Texture2D boat;
         private Texture2D seagull;
 
+        //add a font to our game
+        private SpriteFont pixelfont;
+
+        //let's count how long our seagull has been on the island
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -55,6 +61,9 @@ namespace MonoGameTest
             background = Content.Load<Texture2D>("simple-island");
             boat = Content.Load<Texture2D>("small-boat");
             seagull = Content.Load<Texture2D>("seagull");
+
+            //load our font
+            pixelfont = Content.Load<SpriteFont>("pixel");
 
         }
 
@@ -99,6 +108,14 @@ namespace MonoGameTest
             //draw our background as a rectangle at specified position, width, and height
             //last argument is tint color where white won't tint at all
             spriteBatch.Draw(background, new Rectangle(0, 0, 800, 500), Color.White);
+
+            //sprites stack when drawn
+            //can draw off the screen, so keep coordinates in mind
+            spriteBatch.Draw(seagull, new Vector2(400, 100), Color.White);
+            spriteBatch.Draw(boat, new Vector2(0, 50), Color.White);
+
+            //let's draw some text on our screen with pixelfont
+            spriteBatch.DrawString(pixelfont, "This is a seagull alone on an island.", new Vector2(400, 200), Color.Black);
 
             //finished using our spritebatch
             spriteBatch.End();
