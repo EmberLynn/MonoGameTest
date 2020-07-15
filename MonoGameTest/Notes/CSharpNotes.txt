@@ -1,0 +1,15 @@
+﻿Get and Set
+-allows access of private variables from outside the class
+
+private Texture2D texture;//field
+public Texture2D Texture //property
+{
+	get {return Texture;} //getter
+	set {texture = value;} //setter
+}
+
+OR 
+
+public Texture2D Texture { get; set; }
+-field does not need to be defined
+-is short-hand for the above
