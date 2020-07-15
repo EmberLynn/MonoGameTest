@@ -26,6 +26,11 @@ namespace MonoGameTest
         private float timer = 0;
         private int secondsOnIsland = 0;
 
+        //let's animate the seagull
+        private AnimateSprite animateSprite;
+        //time the animation
+        private float animationTimer;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -61,11 +66,14 @@ namespace MonoGameTest
             //refer specifically to the name of the file in contents
             background = Content.Load<Texture2D>("simple-island");
             boat = Content.Load<Texture2D>("small-boat");
-            seagull = Content.Load<Texture2D>("seagull");
+            //seagull = Content.Load<Texture2D>("seagull");
 
             //load our font
             pixelfont = Content.Load<SpriteFont>("pixel");
 
+            //load the seagull and animate it
+            seagull = Content.Load<Texture2D>("seagullatlas");
+            animateSprite = new AnimateSprite(seagull, 1, 2);
         }
 
         /// <summary>
@@ -94,6 +102,16 @@ namespace MonoGameTest
             //I only want to show the seconds
             secondsOnIsland = (int)timer % 60;
 
+            //make the seagull move and delay his animation
+            animationTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (animationTimer > 99)
+            {
+                animateSprite.Update();
+                animationTimer = 0;
+            }
+            
+           
+    
             base.Update(gameTime);
         }
 
@@ -117,8 +135,11 @@ namespace MonoGameTest
 
             //sprites stack when drawn
             //can draw off the screen, so keep coordinates in mind
-            spriteBatch.Draw(seagull, new Vector2(400, 100), Color.White);
+            //spriteBatch.Draw(seagull, new Vector2(400, 100), Color.White);
             spriteBatch.Draw(boat, new Vector2(0, 50), Color.White);
+
+            //draw the animated seagull
+            animateSprite.Draw(spriteBatch, new Vector2(450, 250));
 
             //let's draw some text on our screen with pixelfont
             spriteBatch.DrawString(pixelfont, "This is a seagull alone on an island. ", new Vector2(390, 180), Color.Black);
