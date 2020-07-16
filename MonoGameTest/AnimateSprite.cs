@@ -52,9 +52,8 @@ namespace MonoGameTest
             //where we want to draw it
             Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
-            //spriteBatch.Begin();
             spriteBatch.Draw(this.texture, destinationRectangle, sourceRectangle, Color.White);
-            //spriteBatch.End();
+        
 
         }
 

@@ -18,6 +18,9 @@ namespace MonoGameTest
         private Texture2D background;
         private Texture2D boat;
         private Texture2D seagull;
+        private Texture2D spider;
+        //current angle of the spider
+        private float spiderAngle;
 
         //add a font to our game
         private SpriteFont pixelfont;
@@ -66,7 +69,7 @@ namespace MonoGameTest
             //refer specifically to the name of the file in contents
             background = Content.Load<Texture2D>("simple-island");
             boat = Content.Load<Texture2D>("small-boat");
-            //seagull = Content.Load<Texture2D>("seagull");
+            spider = Content.Load<Texture2D>("spider");
 
             //load our font
             pixelfont = Content.Load<SpriteFont>("pixel");
@@ -104,13 +107,14 @@ namespace MonoGameTest
 
             //make the seagull move and delay his animation
             animationTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (animationTimer > 99)
+            if (animationTimer > 200)
             {
                 animateSprite.Update();
                 animationTimer = 0;
             }
-            
-           
+
+            //change the angle of our spider
+            spiderAngle += 0.01f;
     
             base.Update(gameTime);
         }
@@ -135,8 +139,19 @@ namespace MonoGameTest
 
             //sprites stack when drawn
             //can draw off the screen, so keep coordinates in mind
-            //spriteBatch.Draw(seagull, new Vector2(400, 100), Color.White);
             spriteBatch.Draw(boat, new Vector2(0, 50), Color.White);
+
+            //let's draw the rotating spider
+            //where we want the spider to render on screen
+            Vector2 location = new Vector2(-20, 100);
+            //the part of the image we want to render
+            Rectangle sourceRectangle = new Rectangle(0, 0, spider.Width, spider.Height);
+            //the point we want the image to rotate on
+            Vector2 origin = new Vector2(0, 0);
+
+            //the texture we want to draw, where we want to draw it, what we want to draw, tint color, current rotation angle, point of rotation, scale factor 
+            //(in this case we don't want it to change, so it is set to 1), possible effects on sprite, depth of sprite
+            spriteBatch.Draw(spider, location, sourceRectangle, Color.White, spiderAngle, origin, 1f, SpriteEffects.None, 1);
 
             //draw the animated seagull
             animateSprite.Draw(spriteBatch, new Vector2(450, 250));
