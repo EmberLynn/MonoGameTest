@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace MonoGameTest
 {
@@ -33,6 +34,13 @@ namespace MonoGameTest
         private AnimateSprite animateSprite;
         //time the animation
         private float animationTimer;
+
+        //textBox and string to draw in it
+        private Texture2D textBox;
+        private string textBoxDisplay = "";
+
+        //used to count keystroke once
+        private KeyboardState oldState;
 
         public Game1()
         {
@@ -71,6 +79,10 @@ namespace MonoGameTest
             boat = Content.Load<Texture2D>("small-boat");
             spider = Content.Load<Texture2D>("spider");
 
+            //create the textBox
+            textBox = new Texture2D(GraphicsDevice, 1, 1);
+            textBox.SetData(new Color[] { Color.White });
+
             //load our font
             pixelfont = Content.Load<SpriteFont>("pixel");
 
@@ -99,6 +111,19 @@ namespace MonoGameTest
                 Exit();
 
             // TODO: Add your update logic here
+
+            //get keys pressed by user and create string to be drawn in text box
+            //checking oldState vs. newState so we only print one keystroke
+            //will probably still turn this into a function since I want it printing actual numbers
+            KeyboardState state = Keyboard.GetState();
+            Keys[] keys = state.GetPressedKeys();
+            foreach(Keys key in keys)
+           {
+                if(!oldState.Equals(state))
+                    textBoxDisplay += keys[keys.Length-1];
+           }
+            //Console.WriteLine(textBoxDisplay); -> for checking my results beforhand
+            oldState = state;
 
             //timer that shows us how long the seagull has been on the island for
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -159,6 +184,10 @@ namespace MonoGameTest
             //let's draw some text on our screen with pixelfont
             spriteBatch.DrawString(pixelfont, "This is a seagull alone on an island. ", new Vector2(390, 180), Color.Black);
             spriteBatch.DrawString(pixelfont, "Seconds he has been alone for: " + secondsOnIsland, new Vector2(390, 200), Color.Black);
+
+            //let's add a rectangle that will be the "textbox" for our input
+            spriteBatch.Draw(textBox, new Rectangle(100, 100, 100, 20), Color.White);
+            spriteBatch.DrawString(pixelfont, textBoxDisplay, new Vector2(100, 100), Color.Black);
 
             //finished using our spritebatch
             spriteBatch.End();

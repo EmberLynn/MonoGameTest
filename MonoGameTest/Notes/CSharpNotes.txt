@@ -13,3 +13,15 @@ OR
 public Texture2D Texture { get; set; }
 -field does not need to be defined
 -is short-hand for the above
+
+Looping through an Array
+var fibNumbers = new List<int> { 0, 1, 1, 2, 3, 5, 8, 13 };
+int count = 0;
+foreach (int element in fibNumbers)
+{
+    count++;
+    Console.WriteLine($"Element #{count}: {element}");
+}
+Console.WriteLine($"Number of elements: {count}");
+-data type and temp name for variable
+-the array to loop through
