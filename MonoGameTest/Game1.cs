@@ -114,15 +114,20 @@ namespace MonoGameTest
 
             //get keys pressed by user and create string to be drawn in text box
             //checking oldState vs. newState so we only print one keystroke
-            //will probably still turn this into a function since I want it printing actual numbers
             KeyboardState state = Keyboard.GetState();
             Keys[] keys = state.GetPressedKeys();
             foreach(Keys key in keys)
            {
-                if(!oldState.Equals(state))
-                    textBoxDisplay += keys[keys.Length-1];
+                //don't want input longer than five characters 
+                if (!oldState.Equals(state)  && textBoxDisplay.Length<5 && key != Keys.Back)
+                   textBoxDisplay += keys[keys.Length-1];
+
+                //backspace
+                if (!oldState.Equals(state) && key == Keys.Back && textBoxDisplay.Length > 0)
+                    textBoxDisplay = textBoxDisplay.Remove(textBoxDisplay.Length - 1);
+
            }
-            //Console.WriteLine(textBoxDisplay); -> for checking my results beforhand
+            //Console.WriteLine(textBoxDisplay);// -> for checking my results beforehand
             oldState = state;
 
             //timer that shows us how long the seagull has been on the island for
