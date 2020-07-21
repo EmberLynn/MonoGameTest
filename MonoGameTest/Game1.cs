@@ -42,10 +42,16 @@ namespace MonoGameTest
         //used to count keystroke once
         private KeyboardState oldState;
 
+        //the seagulls name
+        private string seagullName = "";
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            //allows mouse to show up on screen
+            this.IsMouseVisible = true;
         }
 
         /// <summary>
@@ -114,19 +120,28 @@ namespace MonoGameTest
 
             //get keys pressed by user and create string to be drawn in text box
             //checking oldState vs. newState so we only print one keystroke
+            //this isn't perfect, but good enough for this demostation!
             KeyboardState state = Keyboard.GetState();
             Keys[] keys = state.GetPressedKeys();
             foreach(Keys key in keys)
            {
                 //don't want input longer than five characters 
-                if (!oldState.Equals(state)  && textBoxDisplay.Length<5 && key != Keys.Back)
+                if (!oldState.Equals(state) && textBoxDisplay.Length<5 && key != Keys.Back && key != Keys.Enter)
                    textBoxDisplay += keys[keys.Length-1];
 
                 //backspace
                 if (!oldState.Equals(state) && key == Keys.Back && textBoxDisplay.Length > 0)
                     textBoxDisplay = textBoxDisplay.Remove(textBoxDisplay.Length - 1);
 
-           }
+                //Enter the seagull's name to be displayed on screen and reset textBox
+                if (!oldState.Equals(state) && key == Keys.Enter)
+                {
+                    seagullName = textBoxDisplay;
+                    textBoxDisplay = "";
+
+                }
+
+            }
             //Console.WriteLine(textBoxDisplay);// -> for checking my results beforehand
             oldState = state;
 
@@ -191,8 +206,12 @@ namespace MonoGameTest
             spriteBatch.DrawString(pixelfont, "Seconds he has been alone for: " + secondsOnIsland, new Vector2(390, 200), Color.Black);
 
             //let's add a rectangle that will be the "textbox" for our input
-            spriteBatch.Draw(textBox, new Rectangle(100, 100, 100, 20), Color.White);
-            spriteBatch.DrawString(pixelfont, textBoxDisplay, new Vector2(100, 100), Color.Black);
+            spriteBatch.DrawString(pixelfont, "What should the seagull's name be?", new Vector2(10, 75), Color.Black);
+            spriteBatch.Draw(textBox, new Rectangle(120, 100, 100, 20), Color.White);
+            spriteBatch.DrawString(pixelfont, textBoxDisplay, new Vector2(120, 100), Color.Black);
+
+            //draw the seagull's name
+            spriteBatch.DrawString(pixelfont, seagullName, new Vector2(480, 360), Color.Black);
 
             //finished using our spritebatch
             spriteBatch.End();
