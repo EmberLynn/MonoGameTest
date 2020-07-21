@@ -45,6 +45,11 @@ namespace MonoGameTest
         //the seagulls name
         private string seagullName = "";
 
+        //mouse coordinates and if it was clicked
+        private int mouseX;
+        private int mouseY;
+        private bool clicked;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -118,32 +123,47 @@ namespace MonoGameTest
 
             // TODO: Add your update logic here
 
-            //get keys pressed by user and create string to be drawn in text box
-            //checking oldState vs. newState so we only print one keystroke
-            //this isn't perfect, but good enough for this demostation!
-            KeyboardState state = Keyboard.GetState();
-            Keys[] keys = state.GetPressedKeys();
-            foreach(Keys key in keys)
-           {
-                //don't want input longer than five characters 
-                if (!oldState.Equals(state) && textBoxDisplay.Length<5 && key != Keys.Back && key != Keys.Enter)
-                   textBoxDisplay += keys[keys.Length-1];
+            //get the mouse state
+            MouseState mouseState = Mouse.GetState();
 
-                //backspace
-                if (!oldState.Equals(state) && key == Keys.Back && textBoxDisplay.Length > 0)
-                    textBoxDisplay = textBoxDisplay.Remove(textBoxDisplay.Length - 1);
+            //allow typing after left click happens once and get where the user clicked
+            if (mouseState.LeftButton == ButtonState.Pressed) {
+                clicked = true;
+                mouseX = mouseState.X;
+                mouseY = mouseState.Y;
+            }
 
-                //Enter the seagull's name to be displayed on screen and reset textBox
-                if (!oldState.Equals(state) && key == Keys.Enter)
+            //only allow input into box if it has been clicked
+            if (clicked && mouseX >= 120 && mouseX <= 210 && mouseY >= 95 && mouseY <= 120)
+            {
+                //get keys pressed by user and create string to be drawn in text box
+                //checking oldState vs. newState so we only print one keystroke
+                //this isn't perfect, but good enough for this demostation!
+                KeyboardState state = Keyboard.GetState();
+                Keys[] keys = state.GetPressedKeys();
+                foreach (Keys key in keys)
                 {
-                    seagullName = textBoxDisplay;
-                    textBoxDisplay = "";
+                    //don't want input longer than five characters 
+                    if (!oldState.Equals(state) && textBoxDisplay.Length < 5 && key != Keys.Back && key != Keys.Enter)
+                        textBoxDisplay += keys[keys.Length - 1];
+
+                    //backspace
+                    if (!oldState.Equals(state) && key == Keys.Back && textBoxDisplay.Length > 0)
+                        textBoxDisplay = textBoxDisplay.Remove(textBoxDisplay.Length - 1);
+
+                    //Enter the seagull's name to be displayed on screen and reset textBox
+                    if (!oldState.Equals(state) && key == Keys.Enter)
+                    {
+                        seagullName = textBoxDisplay;
+                        textBoxDisplay = "";
+
+                    }
 
                 }
-
+                //Console.WriteLine(textBoxDisplay);// -> for checking my results beforehand
+                oldState = state;
             }
-            //Console.WriteLine(textBoxDisplay);// -> for checking my results beforehand
-            oldState = state;
+            
 
             //timer that shows us how long the seagull has been on the island for
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
