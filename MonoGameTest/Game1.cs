@@ -92,7 +92,6 @@ namespace MonoGameTest
 
             //create the textBox
             textBox = new Texture2D(GraphicsDevice, 1, 1);
-            textBox.SetData(new Color[] { Color.White });
 
             //load our font
             pixelfont = Content.Load<SpriteFont>("pixel");
@@ -122,6 +121,9 @@ namespace MonoGameTest
                 Exit();
 
             // TODO: Add your update logic here
+            
+            //set the textbox color to not be highlighted
+            textBox.SetData(new Color[] { Color.White });
 
             //get the mouse state
             MouseState mouseState = Mouse.GetState();
@@ -136,6 +138,9 @@ namespace MonoGameTest
             //only allow input into box if it has been clicked
             if (clicked && mouseX >= 120 && mouseX <= 210 && mouseY >= 95 && mouseY <= 120)
             {
+                //set the text box color to be highlighted once it had been clicked
+                textBox.SetData(new Color[] { Color.LightGray });
+                
                 //get keys pressed by user and create string to be drawn in text box
                 //checking oldState vs. newState so we only print one keystroke
                 //this isn't perfect, but good enough for this demostation!
