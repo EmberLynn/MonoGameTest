@@ -104,6 +104,7 @@ namespace MonoGameTest
             //let's add some background music to our island
             Song backgroundMusic = Content.Load<Song>("BeachBowlGalaxy");
             MediaPlayer.Play(backgroundMusic);
+            MediaPlayer.IsRepeating = true;
         }
 
         /// <summary>
