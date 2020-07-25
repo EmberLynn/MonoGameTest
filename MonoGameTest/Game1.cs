@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 
 namespace MonoGameTest
@@ -99,6 +100,10 @@ namespace MonoGameTest
             //load the seagull and animate it
             seagull = Content.Load<Texture2D>("seagullatlas");
             animateSprite = new AnimateSprite(seagull, 1, 2);
+
+            //let's add some background music to our island
+            Song backgroundMusic = Content.Load<Song>("BeachBowlGalaxy");
+            MediaPlayer.Play(backgroundMusic);
         }
 
         /// <summary>

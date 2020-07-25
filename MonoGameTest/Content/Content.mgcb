@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin BeachBowlGalaxy.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:BeachBowlGalaxy.mp3
+
 #begin pixel.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
