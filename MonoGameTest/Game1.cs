@@ -83,7 +83,10 @@ namespace MonoGameTest
             //this contains methods for drawing sprites onto the screen
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            //control the screen size
+            //graphics.PreferredBackBufferWidth = 1200;
+            //graphics.PreferredBackBufferHeight = 750;
+            //graphics.ApplyChanges();
 
             //load our images from contents
             //refer specifically to the name of the file in contents
